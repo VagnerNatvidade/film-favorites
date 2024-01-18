@@ -1,8 +1,4 @@
-export class MovieCard {
-  static search(moviename) {
-    const endpoint = ``;
-  }
-}
+import { MovieCard } from "./movieCard.js";
 
 // estrutura
 export class Movies {
@@ -12,18 +8,39 @@ export class Movies {
   }
 
   load() {
-    this.entries = JSON.parse(localStorage.getItem("@film-favorites")) || [];
+    this.entries = JSON.parse(localStorage.getItem("film-favorites:")) || [];
+  }
 
-    console.log(this.entries);
+  save() {
+    localStorage.setItem("film-favorites:", JSON.stringify(this.entries));
+  }
+
+  async add(movietitle) {
+    let movieExists = this.entries.find((entry) => entry.Title === movietitle);
+
+    console.log(movieExists);
+
+    if (movieExists) return;
+
+    try {
+      const movie = await MovieCard.search(movietitle);
+
+      this.entries = [movie, ...this.entries];
+      this.update();
+      this.save();
+    } catch (error) {
+      console.error("Filme não encontrado");
+    }
   }
 
   delete(movie) {
     const filteredEntries = this.entries.filter(
-      (entry) => entry.name !== movie.name
+      (entry) => entry.Title !== movie.Title
     );
 
     this.entries = filteredEntries;
     this.update();
+    this.save();
   }
 }
 
@@ -35,6 +52,16 @@ export class MoviesView extends Movies {
     this.ul = this.root.querySelector("ul");
 
     this.update();
+    this.onadd();
+  }
+
+  onadd() {
+    const btnAdd = this.root.querySelector(".btn-add");
+    btnAdd.onclick = () => {
+      const { value } = this.root.querySelector("input");
+
+      this.add(value);
+    };
   }
 
   update() {
@@ -43,10 +70,10 @@ export class MoviesView extends Movies {
     this.entries.forEach((movie) => {
       const card = this.createCard();
 
-      card.querySelector(".movie img").src = movie.img;
+      card.querySelector(".movie img").src = movie.Poster;
       card.querySelector(
         ".movie img"
-      ).alt = `Imagem da capa do filme ${movie.name}`;
+      ).alt = `Imagem da capa do filme ${movie.Title}`;
 
       card.querySelector(".btn-remove").onclick = () => {
         const isOk = confirm("Certeza que quer apagar o filme?");
@@ -62,15 +89,11 @@ export class MoviesView extends Movies {
 
   createCard() {
     const li = document.createElement("li");
+    li.classList.add("movie");
 
     li.innerHTML = `
-    <li class="movie">
-      <img
-        src=""
-        alt=""
-        />
-        <button class="btn-remove">&times;</button>
-    </li>
+      <img src="" alt="" />
+      <button class="btn-remove">&times;</button>
     `;
 
     return li;
