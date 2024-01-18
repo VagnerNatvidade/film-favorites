@@ -15,8 +15,10 @@
 }
 
 body {
+  padding: 2rem 0;
   font-size: 1.6rem;
   font-family: var(--ff-primary);
+  background: var(--bg-color);
 }
 
 .sr-only {
@@ -31,19 +33,12 @@ body {
   border-width: 0;
 }
 
-#app {
-  height: 100vh;
-  display: grid;
-  place-content: center;
-  padding: 1rem 4rem 0;
-  background: var(--bg-color);
-}
-
 .search {
+  width: max-content;
   height: 4rem;
   display: flex;
   align-items: center;
-  margin-bottom: 1.4rem;
+  margin: 0 auto 3.2rem;
 }
 
 #input-search {
@@ -64,7 +59,7 @@ button {
 button.btn-add {
   width: 4rem;
   height: 100%;
-  border-radius:  0 0.2rem 0.2rem 0;
+  border-radius: 0 0.2rem 0.2rem 0;
   font-size: 2rem;
   color: var(--bg-color);
   background: var(--btn-plus);
@@ -72,14 +67,15 @@ button.btn-add {
 }
 
 button.btn-add:hover {
-  width: 6rem;
   background: hsla(0, 0%, 100%, 0.6);
 }
 
 .movies {
+  width: 100%;
+  padding: 2.4rem 0;
   display: flex;
   gap: 2.4rem;
-  padding: 2.4rem;
+  margin: auto;
   list-style: none;
   overflow-x: scroll;
 }
@@ -124,14 +120,22 @@ button.btn-remove:hover {
   background: var(--bg-color);
 }
 
-@media (max-width: 768px) {
-  body {
-    background: red;
+@media (max-width: 1024px) {
+  .movie {
+    height: 36rem;
+  }
+
+  .movie img {
+    width: 25rem;
   }
 }
 
-@media (max-width: 1024px) {
-  body {
-    background: green;
+@media (max-width: 384px) {
+  .movie {
+    height: 32rem;
+  }
+
+  .movie img {
+    width: 23rem;
   }
 }
