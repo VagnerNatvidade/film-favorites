@@ -19,6 +19,18 @@ body {
   font-family: var(--ff-primary);
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 #app {
   height: 100vh;
   display: grid;
@@ -27,16 +39,32 @@ body {
   background: var(--bg-color);
 }
 
+.search {
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.4rem;
+}
+
+#input-search {
+  height: 100%;
+  padding: 1rem;
+  border: none;
+}
+
+#input-search:focus-within {
+  outline: 2px solid hsl(205, 29%, 42%);
+}
+
 button {
   border: none;
   cursor: pointer;
 }
 
 button.btn-add {
-  width: 20rem;
-  height: 4rem;
-  margin: 0 auto 1.2rem;
-  border-radius: 0.2rem;
+  width: 4rem;
+  height: 100%;
+  border-radius:  0 0.2rem 0.2rem 0;
   font-size: 2rem;
   color: var(--bg-color);
   background: var(--btn-plus);
@@ -44,7 +72,7 @@ button.btn-add {
 }
 
 button.btn-add:hover {
-  width: 18rem;
+  width: 6rem;
   background: hsla(0, 0%, 100%, 0.6);
 }
 
